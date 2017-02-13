@@ -1,9 +1,11 @@
 import { Server } from 'hapi';
+import CustomersPlugin from './plugins/customers';
 
 const server = new Server({});
 
 const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV || 'development';
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:32768/concierge';
 server.connection({
   port, router: {
     isCaseSensitive: false
@@ -12,6 +14,7 @@ server.connection({
     cors: true
   }
 });
+
 
 server.register([
   require('inert'),
@@ -40,7 +43,9 @@ server.register([
 //        }
       }
     }
-  }
+  },
+  CustomersPlugin
+
 ], err => {
   if (err) throw err;
 
