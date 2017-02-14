@@ -1,4 +1,5 @@
 import { Server } from 'hapi';
+import CustomersPlugin from './plugins/customers';
 
 const server = new Server({});
 
@@ -12,6 +13,7 @@ server.connection({
     cors: true
   }
 });
+
 
 server.register([
   require('inert'),
@@ -40,7 +42,9 @@ server.register([
 //        }
       }
     }
-  }
+  },
+  CustomersPlugin
+
 ], err => {
   if (err) throw err;
 
