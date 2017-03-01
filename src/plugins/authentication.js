@@ -23,24 +23,20 @@ const plugin = (server, options, next) => {
       async: async(request, reply) => {
         let {email, password} = request.payload;
         const customers = await collection('customers');
-        const foundCustomer = await customers.findOne({email});
 
+        const foundCustomer = await customers.findOne({email});
         if (foundCustomer && Bcrypt.compareSync(password, foundCustomer.hashpassword)) {
           delete foundCustomer.hashpassword;
-          const token = jwt.sign(foundCustomer, "secret", {expiresIn: '1 day' });
+          const token = jwt.sign(foundCustomer, "secret", {expiresIn: '1 day'});
           return reply({token});
         }
 
         return reply(Boom.unauthorized('Login Failed'));
-
-
       }
-
     }
   });
 
   return next();
-
 };
 
 plugin.attributes = {
