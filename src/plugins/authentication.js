@@ -1,7 +1,9 @@
-import encryptPassword from './customers.js';
-// import jwt from 'jwt';
+import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import {collection} from '../db';
+import Bcrypt from 'bcryptjs';
+import Boom from 'boom';
+
 
 const plugin = (server, options, next) => {
 
@@ -19,14 +21,23 @@ const plugin = (server, options, next) => {
     },
     handler: {
       async: async(request, reply) => {
-        let { email, password } = request.payload;
-        let customers = await collection('customers');
+        let {email, password} = request.payload;
+        const customers = await collection('customers');
+        const foundCustomer = await customers.findOne({email});
 
 
-        let result = customers.find(email);
-        console.log(result);
-        return reply();
+        if (foundCustomer && Bcrypt.compareSync(password, foundCustomer.hashpassword)) {
+          delete foundCustomer.hashpassword;
+          const token = jwt.sign(foundCustomer, "secret", {expiresIn: '1 day' });
+          return reply({token});
+        }
+
+
+        return reply(Boom.unauthorized('Login Failed'));
+
+
       }
+
     }
   });
 
