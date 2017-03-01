@@ -1,6 +1,6 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 
-const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:32768/concierge';
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/concierge';
 
 const connect = async () => await MongoClient.connect(mongoUri);
 
@@ -10,4 +10,5 @@ export const collection = async (collection) => {
   const db = await connect();
   return db.collection(collection);
 };
+
 

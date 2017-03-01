@@ -1,9 +1,9 @@
-import { Server } from 'hapi';
+import {Server} from 'hapi';
 import CustomersPlugin from './plugins/customers';
 
 const server = new Server({});
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV || 'development';
 server.connection({
   port, router: {
@@ -40,6 +40,19 @@ server.register([
 //          name: '',
 //          url: ''
 //        }
+      }
+    }
+  },
+  {
+    register: require('good'),
+    options: {
+      ops: {interval: 5000},
+      reporters: {
+        development: [
+          {
+            module: 'good-console',
+            args: [{log: '*', response: '*', request: '*', error: '*'}]
+          }, 'stdout']
       }
     }
   },

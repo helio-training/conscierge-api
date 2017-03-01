@@ -1,3 +1,11 @@
 require('babel-polyfill');
 
-module.exports = require('./dist');
+const env = process.env.NODE_ENV || 'development';
+
+if (env === 'production') {
+  module.exports = require('./dist');
+} else {
+  require('babel-register');
+  module.exports = require('./src');
+}
+
