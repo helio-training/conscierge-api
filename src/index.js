@@ -1,6 +1,6 @@
 import { Server } from 'hapi';
 import CustomersPlugin from './plugins/customers';
-
+import AuthenticationPlugin from './plugins/authentication';
 const server = new Server({});
 
 const port = process.env.PORT || 4000;
@@ -43,7 +43,11 @@ server.register([
       }
     }
   },
+
+  AuthenticationPlugin,
   CustomersPlugin
+
+
 
 ], err => {
   if (err) throw err;

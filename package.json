@@ -25,6 +25,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-polyfill": "^6.3.14",
     "babel-preset-latest": "^6.16.0",
+    "babel-register": "^6.23.0",
     "nodemon": "^1.11.0"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "hapi-swagger": "^7.6.0",
     "inert": "^4.1.0",
     "joi": "^10.2.0",
+    "jsonwebtoken": "^7.3.0",
     "mongodb": "^2.2.23",
     "tv": "^6.1.0",
     "vision": "^4.1.1"
