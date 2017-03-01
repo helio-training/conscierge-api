@@ -25,13 +25,11 @@ const plugin = (server, options, next) => {
         const customers = await collection('customers');
         const foundCustomer = await customers.findOne({email});
 
-
         if (foundCustomer && Bcrypt.compareSync(password, foundCustomer.hashpassword)) {
           delete foundCustomer.hashpassword;
           const token = jwt.sign(foundCustomer, "secret", {expiresIn: '1 day' });
           return reply({token});
         }
-
 
         return reply(Boom.unauthorized('Login Failed'));
 
@@ -41,7 +39,7 @@ const plugin = (server, options, next) => {
     }
   });
 
-  next();
+  return next();
 
 };
 
@@ -51,5 +49,3 @@ plugin.attributes = {
 };
 
 export default plugin;
-
-
